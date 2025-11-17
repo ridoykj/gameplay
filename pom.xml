@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.7</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.itbd.gameplay</groupId>
+    <artifactId>gameplay</artifactId>
+    <version>0.0.1</version>
+    <name>GamePlay</name>
+    <description>Demo project for Spring Boot</description>
+    <url/>
+    <licenses>
+        <license/>
+    </licenses>
+    <developers>
+        <developer/>
+    </developers>
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <tag/>
+        <url/>
+    </scm>
+    <properties>
+        <java.version>21</java.version>
+        <frontend-maven-plugin.version>1.15.4</frontend-maven-plugin.version>
+        <node.version>v22.21.0</node.version>
+        <yarn.version>v1.22.22</yarn.version>
+        <npm.version>10.7.0</npm.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>5.14.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna-platform</artifactId>
+            <version>5.14.0</version>
+        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-tomcat</artifactId>-->
+        <!--            <scope>provided</scope>-->
+        <!--        </dependency>-->
+    </dependencies>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>frontend</id>
+            <build>
+                <finalName>${project.name}</finalName>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <annotationProcessorPaths>
+                                <path>
+                                    <groupId>org.projectlombok</groupId>
+                                    <artifactId>lombok</artifactId>
+                                </path>
+                            </annotationProcessorPaths>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>
+                                    <groupId>org.projectlombok</groupId>
+                                    <artifactId>lombok</artifactId>
+                                </exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <version>${frontend-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>nodeAndNpmSetup</id>
+                                <goals>
+                                    <goal>install-node-and-npm</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>npmInstall</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>install</arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>npmRunBuild</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run build</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <nodeVersion>${node.version}</nodeVersion>
+                            <workingDirectory>frontend</workingDirectory>
+                            <installDirectory>target</installDirectory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <properties>
+                <spring.profiles.active>frontend</spring.profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <build>
+                <finalName>web-reactjs</finalName>
+                <plugins>
+                    <!--                    <plugin>-->
+                    <!--                        <artifactId>maven-resources-plugin</artifactId>-->
+                    <!--                        <executions>-->
+                    <!--                            <execution>-->
+                    <!--                                <id>copy-resources</id>-->
+                    <!--                                <phase>process-classes</phase>-->
+                    <!--                                <goals>-->
+                    <!--                                    <goal>copy-resources</goal>-->
+                    <!--                                </goals>-->
+                    <!--                                <configuration>-->
+                    <!--                                    <outputDirectory>${basedir}/target/classes/static</outputDirectory>-->
+                    <!--                                    <resources>-->
+                    <!--                                        <resource>-->
+                    <!--                                            <directory>frontend/dist</directory>-->
+                    <!--                                        </resource>-->
+                    <!--                                    </resources>-->
+                    <!--                                </configuration>-->
+                    <!--                            </execution>-->
+                    <!--                        </executions>-->
+                    <!--                    </plugin>-->
+                    <!--                    <plugin>-->
+                    <!--                        <groupId>com.github.eirslett</groupId>-->
+                    <!--                        <artifactId>frontend-maven-plugin</artifactId>-->
+                    <!--                        <version>${frontend-maven-plugin.version}</version>-->
+                    <!--                        <configuration>-->
+                    <!--                            <workingDirectory>frontend</workingDirectory>-->
+                    <!--                        </configuration>-->
+                    <!--                        <executions>-->
+                    <!--                            <execution>-->
+                    <!--                                <id>install node</id>-->
+                    <!--                                <goals>-->
+                    <!--                                    <goal>install-node-and-npm</goal>-->
+                    <!--                                </goals>-->
+                    <!--                                <configuration>-->
+                    <!--                                    <nodeVersion>${node.version}</nodeVersion>-->
+                    <!--                                    <npmVersion>${npm.version}</npmVersion>-->
+                    <!--                                </configuration>-->
+                    <!--                            </execution>-->
+                    <!--                            <execution>-->
+                    <!--                                <id>npm install</id>-->
+                    <!--                                <goals>-->
+                    <!--                                    <goal>npm</goal>-->
+                    <!--                                </goals>-->
+                    <!--                                <phase>generate-resources</phase>-->
+                    <!--                            </execution>-->
+                    <!--                            <execution>-->
+                    <!--                                <id>npm test</id>-->
+                    <!--                                <goals>-->
+                    <!--                                    <goal>npm</goal>-->
+                    <!--                                </goals>-->
+                    <!--                                <phase>test</phase>-->
+                    <!--                                <configuration>-->
+                    <!--                                    <arguments>test</arguments>-->
+                    <!--                                    <environmentVariables>-->
+                    <!--                                        <CI>true</CI>-->
+                    <!--                                    </environmentVariables>-->
+                    <!--                                </configuration>-->
+                    <!--                            </execution>-->
+                    <!--                            <execution>-->
+                    <!--                                <id>npm build</id>-->
+                    <!--                                <goals>-->
+                    <!--                                    <goal>npm</goal>-->
+                    <!--                                </goals>-->
+                    <!--                                <phase>compile</phase>-->
+                    <!--                                <configuration>-->
+                    <!--                                    <arguments>run build</arguments>-->
+                    <!--                                </configuration>-->
+                    <!--                            </execution>-->
+                    <!--                        </executions>-->
+                    <!--                    </plugin>-->
+                </plugins>
+            </build>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
+</project>
