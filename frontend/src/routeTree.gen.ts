@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SigninRouteImport } from './routes/signin'
 import { Route as MainRouteRouteImport } from './routes/_main/route'
 import { Route as MainIndexRouteImport } from './routes/_main/index'
+import { Route as MainGamesIndexRouteImport } from './routes/_main/games/index'
+import { Route as MainGamesGtaSanAndreasRouteImport } from './routes/_main/games/gta/san-andreas'
 
 const SigninRoute = SigninRouteImport.update({
   id: '/signin',
@@ -27,27 +29,49 @@ const MainIndexRoute = MainIndexRouteImport.update({
   path: '/',
   getParentRoute: () => MainRouteRoute,
 } as any)
+const MainGamesIndexRoute = MainGamesIndexRouteImport.update({
+  id: '/games/',
+  path: '/games/',
+  getParentRoute: () => MainRouteRoute,
+} as any)
+const MainGamesGtaSanAndreasRoute = MainGamesGtaSanAndreasRouteImport.update({
+  id: '/games/gta/san-andreas',
+  path: '/games/gta/san-andreas',
+  getParentRoute: () => MainRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/signin': typeof SigninRoute
   '/': typeof MainIndexRoute
+  '/games': typeof MainGamesIndexRoute
+  '/games/gta/san-andreas': typeof MainGamesGtaSanAndreasRoute
 }
 export interface FileRoutesByTo {
   '/signin': typeof SigninRoute
   '/': typeof MainIndexRoute
+  '/games': typeof MainGamesIndexRoute
+  '/games/gta/san-andreas': typeof MainGamesGtaSanAndreasRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_main': typeof MainRouteRouteWithChildren
   '/signin': typeof SigninRoute
   '/_main/': typeof MainIndexRoute
+  '/_main/games/': typeof MainGamesIndexRoute
+  '/_main/games/gta/san-andreas': typeof MainGamesGtaSanAndreasRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/signin' | '/'
+  fullPaths: '/signin' | '/' | '/games' | '/games/gta/san-andreas'
   fileRoutesByTo: FileRoutesByTo
-  to: '/signin' | '/'
-  id: '__root__' | '/_main' | '/signin' | '/_main/'
+  to: '/signin' | '/' | '/games' | '/games/gta/san-andreas'
+  id:
+    | '__root__'
+    | '/_main'
+    | '/signin'
+    | '/_main/'
+    | '/_main/games/'
+    | '/_main/games/gta/san-andreas'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -78,15 +102,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainIndexRouteImport
       parentRoute: typeof MainRouteRoute
     }
+    '/_main/games/': {
+      id: '/_main/games/'
+      path: '/games'
+      fullPath: '/games'
+      preLoaderRoute: typeof MainGamesIndexRouteImport
+      parentRoute: typeof MainRouteRoute
+    }
+    '/_main/games/gta/san-andreas': {
+      id: '/_main/games/gta/san-andreas'
+      path: '/games/gta/san-andreas'
+      fullPath: '/games/gta/san-andreas'
+      preLoaderRoute: typeof MainGamesGtaSanAndreasRouteImport
+      parentRoute: typeof MainRouteRoute
+    }
   }
 }
 
 interface MainRouteRouteChildren {
   MainIndexRoute: typeof MainIndexRoute
+  MainGamesIndexRoute: typeof MainGamesIndexRoute
+  MainGamesGtaSanAndreasRoute: typeof MainGamesGtaSanAndreasRoute
 }
 
 const MainRouteRouteChildren: MainRouteRouteChildren = {
   MainIndexRoute: MainIndexRoute,
+  MainGamesIndexRoute: MainGamesIndexRoute,
+  MainGamesGtaSanAndreasRoute: MainGamesGtaSanAndreasRoute,
 }
 
 const MainRouteRouteWithChildren = MainRouteRoute._addFileChildren(

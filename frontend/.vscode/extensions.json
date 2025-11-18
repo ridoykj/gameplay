@@ -2,8 +2,6 @@
     "recommendations": [
         "dsznajder.es7-react-js-snippets",
         "dbaeumer.vscode-eslint",
-        "VisualStudioExptTeam.vscodeintellicode",
-        "VisualStudioExptTeam.intellicode-api-usage-examples",
         "bradlc.vscode-tailwindcss",
         "wix.vscode-import-cost",
         "oderwat.indent-rainbow",

@@ -2,7 +2,6 @@ package com.itbd.gameplay.services;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.itbd.gameplay.dto.Cheat;
 import com.itbd.gameplay.dto.CheatCategory;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +10,8 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CheatDataService {
@@ -38,7 +35,8 @@ public class CheatDataService {
         try {
             Resource resource = resourceLoader.getResource("classpath:cheats.json");
             InputStream inputStream = resource.getInputStream();
-            this.cachedCheats = objectMapper.readValue(inputStream, new TypeReference<>() {});
+            this.cachedCheats = objectMapper.readValue(inputStream, new TypeReference<>() {
+            });
             System.out.println("Successfully loaded " + cachedCheats.stream().mapToLong(c -> c.data().size()).sum() + " cheats.");
         } catch (Exception e) {
             System.err.println("Failed to load cheats.json");
@@ -64,21 +62,7 @@ public class CheatDataService {
         if (query == null || query.isBlank()) {
             return getAllCheats(); // Return all cheats if search is empty
         }
-
-        String lowerCaseQuery = query.toLowerCase();
-        List<CheatCategory> filteredList = new ArrayList<>();
-
-        for (CheatCategory category : this.cachedCheats) {
-            List<Cheat> matchingCheats = category.data().stream()
-                    .filter(cheat -> cheat.effect().toLowerCase().contains(lowerCaseQuery) ||
-                            cheat.cheatCode().toLowerCase().contains(lowerCaseQuery))
-                    .collect(Collectors.toList());
-
-            if (!matchingCheats.isEmpty()) {
-                filteredList.add(new CheatCategory(category.header(), matchingCheats));
-            }
-        }
-        return filteredList;
+        return Collections.emptyList();
     }
 
 }

@@ -30,14 +30,15 @@ const CheatList: React.FC<CheatListProps> = ({ categories, onSendCheat }) => {
                                 <tr className="bg-gray-50">
                                     <th className="p-3 text-left font-semibold border-b border-gray-200">Effect</th>
                                     <th className="p-3 text-left font-semibold border-b border-gray-200">Cheat Code</th>
-                                    <th className="p-3 text-left font-semibold border-b border-gray-200">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {category.data.map((cheat) => (
-                                    <tr
+                                    <tr role='button'
+                                        tabIndex={0}
+                                        onClick={() => onSendCheat(cheat.cheatCode)}
                                         key={cheat.cheatCode}
-                                        className="block mb-4 p-2 border rounded-md md:table-row md:mb-0 md:p-0 md:border-none"
+                                        className="block mb-4 p-2 border rounded-md md:table-row md:mb-0 md:p-0 md:border-none cursor-pointer hover:bg-blue-400 hover:drop-shadow-lg active:bg-blue-400 active:drop-shadow-lg transition-colors md:justify-between md:items-center"
                                     >
                                         {/* Effect Cell */}
                                         <td className="flex justify-between items-center p-2 border-b md:table-cell md:border-b-gray-200">
@@ -46,20 +47,9 @@ const CheatList: React.FC<CheatListProps> = ({ categories, onSendCheat }) => {
                                         </td>
 
                                         {/* Code Cell */}
-                                        <td className="flex justify-between items-center p-2 border-b md:table-cell md:border-b-gray-200 font-mono font-bold text-red-600">
+                                        <td className="flex justify-between items-center p-2 md:table-cell font-mono font-bold text-red-600 md:border-b md:border-b-gray-200">
                                             <span className="font-bold text-gray-800 md:hidden">Code</span>
                                             <span>{cheat.cheatCode}</span>
-                                        </td>
-
-                                        {/* Action Cell */}
-                                        <td className="flex justify-between items-center p-2 md:table-cell md:border-b-gray-200">
-                                            <span className="font-bold md:hidden">Action</span>
-                                            <button
-                                                onClick={() => onSendCheat(cheat.cheatCode)}
-                                                className="w-full md:w-auto bg-green-600 text-white font-bold py-2 px-3 rounded-md transition-colors hover:bg-green-700 text-sm"
-                                            >
-                                                Send
-                                            </button>
                                         </td>
                                     </tr>
                                 ))}

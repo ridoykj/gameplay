@@ -27,7 +27,7 @@ const ManualCheatForm: React.FC<ManualCheatFormProps> = ({ onCheatSubmit, isLoad
                 autoComplete="off"
                 value={cheat}
                 onChange={(e) => setCheat(e.target.value)}
-                className="flex-grow min-w-[200px] uppercase w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                className="grow min-w-[200px] uppercase p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             <button
                 type="submit"
