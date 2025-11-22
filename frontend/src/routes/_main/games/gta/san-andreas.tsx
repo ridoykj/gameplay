@@ -2,11 +2,12 @@ import { useQuery, useMutation } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router'
 import { useState, useEffect, useMemo } from 'react';
 import { fetchCheats, sendCheat } from '../../../../controller/cheats-api';
-import type { ResponseData } from '../../../../types';
-import CheatList from '../../../../views/error/components/CheatList';
-import ManualCheatForm from '../../../../views/error/components/ManualCheatForm';
-import ResponseMessage from '../../../../views/error/components/ResponseMessage';
-import SearchBar from '../../../../views/error/components/SearchBar';
+import type { ResponseData, Cheat } from '../../../../types';
+import CheatList from '../../../../views/error/components/games/gta/san-andreas/CheatList';
+import ManualCheatForm from '../../../../views/error/components/games/gta/san-andreas/ManualCheatForm';
+import ResponseMessage from '../../../../views/error/components/games/gta/san-andreas/ResponseMessage';
+import SearchBar from '../../../../views/error/components/games/gta/san-andreas/SearchBar';
+import FavoritesList from '../../../../views/error/components/games/gta/san-andreas/FavoritesList';
 
 export const Route = createFileRoute('/_main/games/gta/san-andreas')({
   component: RouteComponent,
@@ -28,17 +29,51 @@ function RouteComponent() {
     };
   }, [searchQuery]);
 
-  // const { data: categories = [], isLoading: isSearching } = useQuery({
-  //   queryKey: ['cheats', debouncedQuery], // A unique key for this query
-  //   queryFn: () => fetchCheats(debouncedQuery), // The function that fetches the data, now used for server-side search
-  //   placeholderData: (previousData) => previousData, // Show previous data while new data is loading
-  //   enabled: !!debouncedQuery, // Only run this query if there's a search term
-  // });
+  // State for favorites, loaded from localStorage
+  const [favorites, setFavorites] = useState<string[]>(() => {
+    try {
+      const savedFavorites = localStorage.getItem('gta-sa-favorites');
+      return savedFavorites ? JSON.parse(savedFavorites) : [];
+    } catch (error) {
+      console.error("Failed to parse favorites from localStorage", error);
+      return [];
+    }
+  });
+
+  // Effect to save favorites to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem('gta-sa-favorites', JSON.stringify(favorites));
+    } catch (error) {
+      console.error("Failed to save favorites to localStorage", error);
+    }
+  }, [favorites]);
+
+  // Function to toggle a cheat's favorite status
+  const toggleFavorite = (cheatCode: string) => {
+    setFavorites(prevFavorites => {
+      if (prevFavorites.includes(cheatCode)) {
+        return prevFavorites.filter(code => code !== cheatCode);
+      } else {
+        return [...prevFavorites, cheatCode];
+      }
+    });
+  };
 
   const { data: allCategories = [], isLoading: isSearching } = useQuery({
     queryKey: ['cheats', ''], // A unique key for fetching all cheats
     queryFn: () => fetchCheats(''), // Fetch all data when the component mounts
   });
+
+  // Memoize the list of favorite cheat objects
+  const favoriteCheats = useMemo(() => {
+    if (!allCategories.length || !favorites.length) {
+      return [];
+    }
+    const allCheats: Cheat[] = allCategories.flatMap(category => category.data);
+    return favorites
+      .map(favCode => allCheats.find(cheat => cheat.cheatCode === favCode)).filter((c): c is Cheat => c !== undefined);
+  }, [allCategories, favorites]);
 
   const filteredCategories = useMemo(() => {
     if (!debouncedQuery) {
@@ -78,14 +113,19 @@ function RouteComponent() {
 
         <ResponseMessage response={response} />
 
+        {/* Display favorite cheats */}
+        <FavoritesList favorites={favoriteCheats} onSendCheat={submitCheat} onToggleFavorite={toggleFavorite} />
+
         {/* Pass the mutation function and its loading state to the form */}
         <ManualCheatForm onCheatSubmit={submitCheat} isLoading={isSubmitting} />
 
         {/* Pass the search handler and the query's loading state to the search bar */}
         <SearchBar onSearch={setSearchQuery} isLoading={isSearching} />
 
-        {/* Pass the fetched data and the mutation function to the list */}
-        <CheatList categories={filteredCategories} onSendCheat={submitCheat} />
+        {/* Pass the fetched data, mutation function, favorites, and toggle function to the list */}
+        <div className="mt-6">
+          <CheatList categories={filteredCategories} onSendCheat={submitCheat} favorites={favorites} onToggleFavorite={toggleFavorite} />
+        </div>
       </div>
     </div>
   );

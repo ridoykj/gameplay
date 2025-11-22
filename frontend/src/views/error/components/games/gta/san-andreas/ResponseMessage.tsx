@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ResponseData } from '../../../types';
+import type { ResponseData } from '../../../../../../types';
 
 interface ResponseMessageProps {
     response: ResponseData | null;

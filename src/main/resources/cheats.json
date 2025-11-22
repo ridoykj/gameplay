@@ -1,6 +1,6 @@
 [
   {
-    "header": "Weapon, Health, and Money Cheat Codes",
+    "header": "Weapon, Health, and Money",
     "data": [
       {
         "effect": "Health, Armor, and Money ($250,000)",
@@ -13,6 +13,15 @@
       {
         "effect": "(Almost) Infinite Health",
         "cheatCode": "BAGUVIX"
+      },
+
+      {
+        "effect": "Commit suicide",
+        "cheatCode": "SZCMAWO"
+      },
+      {
+        "effect": "Adrenaline effect",
+        "cheatCode": "MUNASEF"
       },
       {
         "effect": "Weapons 1 (Bat, Pistol, Shotgun, Mini SMG, AK 47, Rocket Launcher, Molotov Cocktail, Spray Can, Brass Knuckles.)",
@@ -29,7 +38,7 @@
     ]
   },
   {
-    "header": "Gameplay Cheat Codes",
+    "header": "Gameplay",
     "data": [
       {
         "effect": "Wanted Level Down",
@@ -46,6 +55,14 @@
       {
         "effect": "Maximum Wanted Level",
         "cheatCode": "BRINGITON"
+      },
+      {
+        "effect": "Six star wanted level",
+        "cheatCode": "LJSPQK"
+      },
+      {
+        "effect": "Wanted Level Cleared",
+        "cheatCode": "ASNAEB"
       },
       {
         "effect": "Pedestrian Riot",
@@ -102,11 +119,27 @@
     ]
   },
   {
-    "header": "Vehicle Spawn Cheat Codes",
+    "header": "Vehicle Spawn",
     "data": [
+      {
+        "effect": "Maximum diving skill",
+        "cheatCode": "VQIMAHA"
+      },
+      {
+        "effect": "You car is invincible",
+        "cheatCode": "JCNRUAD"
+      },
       {
         "effect": "Spawn Rhino Tank",
         "cheatCode": "WPRTON"
+      },
+      {
+        "effect": "Spawn Rhino Tank 2",
+        "cheatCode": "AIWPRTON "
+      },
+      {
+        "effect": "Spawn Rhino Tank 3",
+        "cheatCode": "TIMETOKICKASS "
       },
       {
         "effect": "Spawn Jetpack",
@@ -183,11 +216,15 @@
     ]
   },
   {
-    "header": "CJ Stat and Gang Cheat Codes",
+    "header": "CJ Stat and Gang",
     "data": [
       {
         "effect": "Max Muscle",
         "cheatCode": "BUFFMEUP"
+      },
+      {
+        "effect": "Maximum stamina",
+        "cheatCode": "VKYPQCF"
       },
       {
         "effect": "Max Fat",
@@ -232,11 +269,15 @@
       {
         "effect": "Recruit Anyone (Rocket Launcher)",
         "cheatCode": "ZSOXFSQ"
+      },
+      {
+        "effect": "Recruit anyone (AK-47)",
+        "cheatCode": "BMTPWHR"
       }
     ]
   },
   {
-    "header": "Weather and Time Cheat Codes",
+    "header": "Weather and Time",
     "data": [
       {
         "effect": "Always Midnight",
@@ -285,7 +326,7 @@
     ]
   },
   {
-    "header": "Traffic, Vehicle, Boats, Planes, and Motorcycle Cheat Codes",
+    "header": "Traffic, Vehicle, Boats, Planes, and Motorcycle",
     "data": [
       {
         "effect": "Free Aim While Driving",
